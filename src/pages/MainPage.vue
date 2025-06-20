@@ -27,7 +27,7 @@ const navigationDrawerClick = () => {
         <h1 class="navigation-block-title">Что открыть?</h1>
         <v-divider></v-divider>
         <router-link class="navigation-block-link" to="/todo/page/">Дневник</router-link>
-        <router-link class="navigation-block-link" to="/throw/">Бросить</router-link>
+        <router-link class="navigation-block-link" to="/throw/page/">Бросить</router-link>
       </div>
     </v-navigation-drawer>
     <v-main>

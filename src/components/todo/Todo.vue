@@ -25,8 +25,8 @@ const addWrite = () => {
 }
 const toId = ref(true)
 const hrefToId = async (id) => {
+  localStorage.setItem("urlRouter", JSON.stringify(router.currentRoute.value.fullPath))
   await router.push({ name: 'todo ID', params: { id: id } });
-  console.log(router.currentRoute.value.params.id);
 }
 
 </script>

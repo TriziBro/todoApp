@@ -2,8 +2,9 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomePage from "../pages/HomePage.vue";
 import Todo from "../components/todo/Todo.vue";
 import TodoRouter from "../components/todo/TodoRouter.vue";
-import Throw from "../components/Throw.vue";
-import TodoID from '../components/todo/ID/TodoID.vue'
+import Throw from "../components/throw/Throw.vue";
+import ThrowRouter from "../components/throw/ThrowRouter.vue";
+import TodoID from '../components/todo/TodoID.vue'
 
 const routes = [
     {
@@ -32,7 +33,14 @@ const routes = [
     {
         path: '/throw/',
         name: 'throw',
-        component: Throw
+        component: ThrowRouter,
+        children: [
+            {
+                path: 'page/',
+                name: 'throw page',
+                component: Throw
+            }
+        ]
     }
 ]
 const router = createRouter({
