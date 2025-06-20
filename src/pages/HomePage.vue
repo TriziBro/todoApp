@@ -15,7 +15,9 @@ const navigationDrawerClick = () => {
         <v-col>
           <v-btn @click="navigationDrawerClick()">Меню</v-btn>
         </v-col>
-        <v-col></v-col>
+        <v-col>
+          <router-link to="/">Домой</router-link>
+        </v-col>
       </v-row>
     </v-app-bar>
 
@@ -28,9 +30,13 @@ const navigationDrawerClick = () => {
       </div>
     </v-navigation-drawer>
     <v-main>
-      <router-view name="todo"></router-view>
-      <router-view name="throw"></router-view>
-      <router-view></router-view>
+      <v-container>
+<!--        <router-view name="todo ID"></router-view>-->
+        <router-view name="todo"></router-view>
+        <router-view name="throw"></router-view>
+        <router-view></router-view>
+
+      </v-container>
     </v-main>
   </v-app>
 </template>
