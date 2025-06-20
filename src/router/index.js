@@ -1,34 +1,39 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomePage from "../pages/HomePage.vue";
-import Todo from "../components/Todo.vue";
+import Todo from "../components/todo/Todo.vue";
+import TodoRouter from "../components/todo/TodoRouter.vue";
 import Throw from "../components/Throw.vue";
-import TodoID from '../components/ID/TodoID.vue'
+import TodoID from '../components/todo/ID/TodoID.vue'
 
 const routes = [
     {
         path: '/',
         name: 'homepage',
         component: HomePage,
+    },
+    {
+
+        path: '/todo/',
+        name: 'todo',
+        component: TodoRouter,
         children: [
             {
-                path: 'todo/',
-                name: 'todo',
-                component: Todo,
-                childeren: [
-                    {
-                        path: ':id/',
-                        name: 'todo ID',
-                        component: TodoID
-                    }
-                ]
+                path: 'page/',
+                name: 'todo page',
+                component: Todo
             },
             {
-                path: 'throw/',
-                name: 'throw',
-                component: Throw
+                path: 'id/:id/',
+                name: 'todo ID',
+                component: TodoID
             }
         ]
     },
+    {
+        path: '/throw/',
+        name: 'throw',
+        component: Throw
+    }
 ]
 const router = createRouter({
     // history: createWebHistory(process.env.NODE_ENV === 'production' ? '/' : process.env.BASE_URL),

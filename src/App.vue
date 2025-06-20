@@ -1,12 +1,11 @@
 <script setup="">
-import HomePage from "./pages/HomePage.vue";
+import HomePage from "./pages/MainPage.vue";
 
 </script>
 
 <template>
 
-  <router-view name="homepage"></router-view>
-  <router-view></router-view>
+  <HomePage></HomePage>
 
 </template>
 
