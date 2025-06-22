@@ -1,11 +1,10 @@
-<script setup="">
-import {onMounted} from "vue";
+<script setup>
 
 </script>
 
 <template>
 
-  <h1>Home</h1>
+  <h1>add</h1>
 
 </template>
 

@@ -3,32 +3,22 @@ import {ref, onMounted} from 'vue'
 import {useRouter} from 'vue-router'
 import {isString} from "lodash/lang.js";
 import {_} from 'lodash'
+
 //
 const router = useRouter()
 //
-const arrayWrite = ref([
-  {
-    id: 0,
-    title: "Запись 1",
-    text: "Моя первая запись в дневнике",
-    date: "10.10.2025"
-  },
-  {
-    id: 1,
-    title: "Запись 2",
-    text: "Моя вторая запись в дневнике",
-    date: "13.10.2025"
-  },
-])
-const addWrite = () => {
-  console.log('ADD')
+const arrayWrite = ref(null)
+const addWrite = async () => {
+  await router.push({ name: 'todo add' });
 }
 const toId = ref(true)
 const hrefToId = async (id) => {
   localStorage.setItem("urlRouter", JSON.stringify(router.currentRoute.value.fullPath))
   await router.push({ name: 'todo ID', params: { id: id } });
 }
-
+onMounted(() => {
+  arrayWrite.value = JSON.parse(localStorage.getItem("todo"))
+})
 </script>
 
 <template>

@@ -5,6 +5,7 @@ import TodoRouter from "../components/todo/TodoRouter.vue";
 import Throw from "../components/throw/Throw.vue";
 import ThrowRouter from "../components/throw/ThrowRouter.vue";
 import TodoID from '../components/todo/TodoID.vue'
+import TodoAdd from '../components/todo/TodoAdd.vue'
 
 const routes = [
     {
@@ -27,6 +28,11 @@ const routes = [
                 path: 'id/:id/',
                 name: 'todo ID',
                 component: TodoID
+            },
+            {
+                path: 'add/',
+                name: 'todo add',
+                component: TodoAdd
             }
         ]
     },

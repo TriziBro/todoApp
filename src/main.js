@@ -6,6 +6,9 @@ import { createPinia } from 'pinia'
 import vuetify from './plugins/vuetify'
 // - router
 import router from './router'
+// 
+import cors from 'cors'
+
 
 const app = createApp(App)
 app.use(createPinia())
@@ -21,4 +24,5 @@ router.afterEach(() => {
 });
 app.use(router)
 app.use(vuetify)
+app.use(cors)
 app.mount('#app')

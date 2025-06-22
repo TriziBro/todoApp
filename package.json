@@ -11,6 +11,8 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "couchbase": "^4.5.0",
     "lodash": "^4.17.21",
     "pinia": "^3.0.3",
     "vue": "^3.5.13",
