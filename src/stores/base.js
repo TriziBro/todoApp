@@ -7,7 +7,21 @@ export const useUserStore = defineStore('base', () => {
     const todo = ref([])
     const todoId = ref([])
     const status = ref(null)
-    const fetchUsers = async () => {
+    const visitsInSite = () => {
+        let visits = JSON.parse(localStorage.getItem('visits'))
+        if (!visits) {
+            localStorage.setItem('visits', JSON.stringify(1));
+            visits = 1;
+            localStorage.setItem('basket_object', JSON.stringify([]))
+            localStorage.setItem("basket_click_user", JSON.stringify(false))
+            localStorage.setItem("user_id", JSON.stringify(null))
+        } else {
+            const newVisits = visits + 1;
+            localStorage.setItem('visits', JSON.stringify(newVisits));
+            visits = newVisits;
+        }
+    }
+    const fetchTodo= async (id) => {
         try {
             todo.value = [
                 {
@@ -38,5 +52,5 @@ export const useUserStore = defineStore('base', () => {
             console.log(e);
         }
     }
-    return { todo, status, fetchUsers, getTodoId}
+    return { todo, status, visitsInSite, fetchTodo, getTodoId}
 })

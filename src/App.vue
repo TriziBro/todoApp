@@ -3,9 +3,10 @@ import {onMounted} from 'vue'
 import HomePage from "./pages/MainPage.vue";
 import { useUserStore } from "./stores/base.js"
 const store = useUserStore()
-const { fetchUsers } = store
+const { fetchTodo, visitsInSite } = store
 onMounted(async () => {
-  await fetchUsers()
+  visitsInSite()
+  await fetchTodo()
       .then(() => {
         console.log('ok')
       })
