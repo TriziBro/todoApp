@@ -7,6 +7,27 @@ export const useUserStore = defineStore('base', () => {
     const todo = ref([])
     const todoId = ref([])
     const status = ref(null)
+
+    const checkUser = async () => {
+        const check = ref(JSON.parse(localStorage.getItem("check")))
+        console.log(check.value);
+        if (check.value === null) {
+            return 'registration page'
+        }
+    }
+    const registrationUser = async (data) => {
+        try {
+            const responseData = await api.post('/registration-user', data)
+            console.log('Response status:', responseData.status);
+            console.log('Response data:', responseData.data.user.id);
+            localStorage.setItem("check", responseData.data.user.id)
+            if (responseData.status === 201) {
+                window.location.reload()
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     const visitsInSite = () => {
         let visits = JSON.parse(localStorage.getItem('visits'))
         if (!visits) {
@@ -52,5 +73,5 @@ export const useUserStore = defineStore('base', () => {
             console.log(e);
         }
     }
-    return { todo, status, visitsInSite, fetchTodo, getTodoId}
+    return { todo, status, visitsInSite, fetchTodo, getTodoId, checkUser, registrationUser}
 })

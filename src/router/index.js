@@ -6,12 +6,18 @@ import Throw from "../components/throw/Throw.vue";
 import ThrowRouter from "../components/throw/ThrowRouter.vue";
 import TodoID from '../components/todo/TodoID.vue'
 import TodoAdd from '../components/todo/TodoAdd.vue'
+import RegistrationPage from '../pages/RegistrationPage.vue'
 
 const routes = [
     {
         path: '/',
         name: 'homepage',
         component: HomePage,
+    },
+    {
+        path: '/registration/',
+        name: 'registration page',
+        component: RegistrationPage
     },
     {
 

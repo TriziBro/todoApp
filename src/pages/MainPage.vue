@@ -3,9 +3,12 @@ import {ref} from 'vue'
 import RouterComponent from "../components/RouterComponent.vue";
 
 const navigationDrawer = ref(false)
-
 const navigationDrawerClick = () => {
   navigationDrawer.value = !navigationDrawer.value
+}
+const signOut = () => {
+  localStorage.removeItem("check")
+  window.location.reload()
 }
 </script>
 
@@ -18,6 +21,9 @@ const navigationDrawerClick = () => {
         </v-col>
         <v-col>
           <router-link to="/">Домой</router-link>
+        </v-col>
+        <v-col>
+          <v-btn @click="signOut()">Выйти</v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
