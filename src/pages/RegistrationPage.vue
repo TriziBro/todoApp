@@ -1,10 +1,15 @@
 <script setup>
-import {ref, computed} from 'vue'
+import {ref, onMounted, computed} from 'vue'
 import {useUserStore} from '../stores/base.js'
 const store = useUserStore()
-const { registrationUser } = store
+const { registrationUser, signInUser } = store
+import {useRouter} from 'vue-router'
+const router = useRouter()
+
 const regCheck = ref(true)
 const loginInAcc = () => {
+  user.value.name = null
+  user.value.password = null
   regCheck.value = !regCheck.value
 }
 const user = ref({
@@ -42,12 +47,33 @@ const validate = () => {
 };
 const regNewAcc = async () => {
   if (isFormValid.value) {
-    console.log('Registration successful', user.value);
-    await registrationUser(user.value)
+    console.log('Успешная регистрация', user.value);
+    const regFunc = await registrationUser(user.value)
+    if (regFunc === 201) {
+      router.push({ path: '/' })
+      window.location.reload()
+    }
   } else {
-    console.log('Validation failed');
+    console.log('Ошибка');
   }
 }
+const loginNewAcc = async () => {
+  if (isFormValid.value) {
+    console.log('Отправка данных', user.value);
+    const signInFunc = await signInUser(user.value)
+    if (signInFunc === 200) {
+      router.push({ path: '/' })
+      window.location.reload()
+    }
+  } else {
+    console.log('Ошибка');
+  }
+}
+onMounted(() => {
+  if (JSON.parse(localStorage.getItem("login")) === true) {
+    router.push({ name: "homepage"})
+  }
+})
 </script>
 
 <template>
@@ -68,6 +94,17 @@ const regNewAcc = async () => {
   </v-container>
   <v-container v-else>
     <h1 class="regTitle">Выполните вход в аккаунт или <span @click="loginInAcc()">зарегестрируйтесь</span></h1>
+    <v-form @submit.prevent="loginNewAcc()">
+      <v-text-field v-model="user.name"
+                    label="Введите имя пользователя"
+                    :rules="rulesUserName"
+      ></v-text-field>
+      <v-text-field v-model="user.password"
+                    label="Введите пароль"
+                    :rules="rulesUserPassword"
+      ></v-text-field>
+      <v-btn type="submit" :disabled="validate()">Войти</v-btn>
+    </v-form>
   </v-container>
 </template>
 

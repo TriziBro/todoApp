@@ -8,11 +8,16 @@ export const useUserStore = defineStore('base', () => {
     const todoId = ref([])
     const status = ref(null)
 
-    const checkUser = async () => {
-        const check = ref(JSON.parse(localStorage.getItem("check")))
-        console.log(check.value);
-        if (check.value === null) {
-            return 'registration page'
+    const visitsInSite = () => {
+        let visits = JSON.parse(localStorage.getItem('visits'))
+        if (!visits) {
+            localStorage.setItem('visits', JSON.stringify(1));
+            localStorage.setItem('login', JSON.stringify(false))
+            visits = 1;
+        } else {
+            const newVisits = visits + 1;
+            localStorage.setItem('visits', JSON.stringify(newVisits));
+            visits = newVisits;
         }
     }
     const registrationUser = async (data) => {
@@ -20,44 +25,32 @@ export const useUserStore = defineStore('base', () => {
             const responseData = await api.post('/registration-user', data)
             console.log('Response status:', responseData.status);
             console.log('Response data:', responseData.data.user.id);
-            localStorage.setItem("check", responseData.data.user.id)
-            if (responseData.status === 201) {
-                window.location.reload()
-            }
+            localStorage.setItem("check", JSON.stringify(responseData.data.user.id))
+            localStorage.setItem("login", JSON.stringify(true))
+
+            return responseData.status
         } catch (err) {
             console.log(err)
         }
     }
-    const visitsInSite = () => {
-        let visits = JSON.parse(localStorage.getItem('visits'))
-        if (!visits) {
-            localStorage.setItem('visits', JSON.stringify(1));
-            visits = 1;
-            localStorage.setItem('basket_object', JSON.stringify([]))
-            localStorage.setItem("basket_click_user", JSON.stringify(false))
-            localStorage.setItem("user_id", JSON.stringify(null))
-        } else {
-            const newVisits = visits + 1;
-            localStorage.setItem('visits', JSON.stringify(newVisits));
-            visits = newVisits;
+    const signInUser = async (data) => {
+        try {
+            const responseData = await api.post('/sign-in-user', data)
+            console.log('Response status:', responseData.status);
+            localStorage.setItem("check", JSON.stringify(responseData.data.user))
+            localStorage.setItem("login", JSON.stringify(true))
+
+            return responseData.status
+        } catch (err) {
+            console.log(err)
         }
     }
-    const fetchTodo= async (id) => {
+
+    const fetchTodo = async (id) => {
         try {
-            todo.value = [
-                {
-                    id: 1,
-                    title: "Запись 1",
-                    text: "Моя первая запись в дневнике",
-                    date: "10.10.2025"
-                },
-                {
-                    id: 2,
-                    title: "Запись 2",
-                    text: "Моя вторая запись в дневнике",
-                    date: "13.10.2025"
-                },
-            ]
+            const responseData = await api.post("/api/todo/list", {id: id})
+            console.log(responseData.data);
+            todo.value = responseData.data
             localStorage.setItem("todo", JSON.stringify(todo.value))
         } catch (error) {
             console.error('Error:', error.message)
@@ -73,5 +66,17 @@ export const useUserStore = defineStore('base', () => {
             console.log(e);
         }
     }
-    return { todo, status, visitsInSite, fetchTodo, getTodoId, checkUser, registrationUser}
+
+    const addTodo = async (data) => {
+        try {
+            const todoId = todo.value.length + 1
+            data.todo.id = todoId
+            console.log(data);
+            const responseData = await api.post("/api/todo/add", data)
+            return responseData.status
+        } catch (error) {
+            console.error('Error:', error.message)
+        }
+    }
+    return { todo, todoId, status, fetchTodo, getTodoId, registrationUser, signInUser, visitsInSite, addTodo}
 })

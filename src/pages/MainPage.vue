@@ -8,6 +8,7 @@ const navigationDrawerClick = () => {
 }
 const signOut = () => {
   localStorage.removeItem("check")
+  localStorage.setItem('login', JSON.stringify(false))
   window.location.reload()
 }
 </script>

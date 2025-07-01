@@ -6,7 +6,7 @@ const store = useUserStore()
 const { getTodoId } = store
 //
 const router = useRouter()
-const todoId = ref(null)
+//
 const id = ref(null)
 const toBack = async () => {
   const url = ref(JSON.parse(localStorage.getItem("urlRouter")))
@@ -16,8 +16,6 @@ onMounted(async () => {
   id.value = router.currentRoute.value.params.id
   await getTodoId(id.value)
       .then(() => {
-        todoId.value = JSON.parse(localStorage.getItem("todoId"))
-        console.log(todoId.value);
       })
       .catch((e) => {
         console.log(e);
@@ -27,7 +25,7 @@ onMounted(async () => {
 
 <template>
   <p @click="toBack()">Назад</p>
-  <div class="block" v-for="id in todoId">
+  <div class="block" v-for="id in store.todoId">
     <h1>{{ id.title }}</h1>
     <p>{{ id.text }}</p>
   </div>

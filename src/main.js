@@ -8,7 +8,8 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 // 
 import cors from 'cors'
-
+// dayjs
+import dayjs from 'dayjs';
 
 const app = createApp(App)
 app.use(createPinia())
@@ -25,4 +26,5 @@ router.afterEach(() => {
 app.use(router)
 app.use(vuetify)
 app.use(cors)
+app.config.globalProperties.$dayjs = dayjs;
 app.mount('#app')
